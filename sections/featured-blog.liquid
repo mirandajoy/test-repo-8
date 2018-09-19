@@ -1,135 +1,42 @@
-<div class="page-width">
-  {% if section.settings.title != blank %}
-    <header class="section-header text-center">
-      <h2>{{ section.settings.title | escape }}</h2>
-    </header>
-  {% endif %}
+<div id="home-blog" class="index-section home-section">
+	<div class="home-blog">
+		<div class="wrapper wrapper--margins">
+		{%- assign blog = blogs[section.settings.blog] -%}
 
-  {%- assign blog = blogs[section.settings.blog] -%}
+			{% if blogs[section.settings.blog] != blank %}
 
-  {% unless blog.articles_count == 0 %}
-    <ul class="grid grid--uniform grid--blog">
-      {% for article in blog.articles limit: section.settings.post_limit %}
-        <li class="grid__item medium-up--one-third">
-          <a href="{{ article.url }}" class="article__link">
-            {% if article.image %}
-              {% capture img_id %}ArticleImage-{{ article.image.id }}{% endcapture %}
-              {% capture img_wrapper_id %}ArticleImageWrapper-{{ article.image.id }}{% endcapture %}
-              {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+			  {% if section.settings.title != blank %}
+			    <h2 class="home-section-title">{{ section.settings.title | escape }}</h2>
+			  {% endif %}
 
-              {% include 'image-style' with image: article.image, small_style: true, width: 345, height: 345, wrapper_id: img_wrapper_id, img_id: img_id %}
-              <div id="{{ img_wrapper_id }}" class="article__grid-image-wrapper js">
-                <div class="article__grid-image-container" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100}}%;">
-                  <img id="{{ img_id }}"
-                      class="article__grid-image lazyload"
-                      src="{{ article.image | img_url: '300x300' }}"
-                      data-src="{{ img_url }}"
-                      data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
-                      data-aspectratio="{{ article.image.aspect_ratio }}"
-                      data-sizes="auto"
-                      alt="">
-                </div>
-              </div>
-              <noscript>
-                <div class="article__grid-image-wrapper">
-                  {{ article | img_url: '345x345', scale: 2 | img_tag: article.title, 'article__grid-image' }}
-                </div>
-              </noscript>
-            {% endif %}
+			{% paginate blog.articles by section.settings.post_limit %}
 
-            <h3 class="article__title{% if article.image %} article__title--has-image{% endif %}">
-              {{ article.title }}
-            </h3>
-          </a>
+			<div class="blog-list">
 
-          <div class="article__grid-meta{% if article.image %} article__grid-meta--has-image{% endif %}">
-            {% if section.settings.blog_show_author %}
-              <span class="article__author">{{ 'blogs.article.by_author' | t: author: article.author }}</span>
-            {% endif %}
+				{% for article in blog.articles %}
+				  {% include 'blog_item' with blog.comments_enabled? %}
+				{% endfor %}
 
-            {% if section.settings.blog_show_date %}
-              <span class="article__date">
-                {{ article.published_at | time_tag: format: 'month_day_year' }}
-              </span>
-            {% endif %}
+			</div>
 
-            <div class="rte article__grid-excerpt">
-              {% if article.excerpt.size > 0 %}
-                {{ article.excerpt }}
-              {% else %}
-                {{ article.content | strip_html | truncate: 150 }}
-              {% endif %}
-            </div>
+			{% if paginate.next.is_link %}
+			  <p class="text-center"><a class="btn btn--large btn--outline btn--dark" href="{{ blog.url }}">More posts</a></p>
+			{% endif %}
 
-            {% if article.tags.size > 0 %}
-              <div class="article__tags rte">
-                <ul class="list--inline" aria-label="{{ 'blogs.article.tags' | t }}">
-                  {% for tag in article.tags %}
-                    <li>
-                      <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article__grid-tag">{{ tag }}</a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            {% endif %}
+			{% endpaginate %}
 
-            <ul class="list--inline article__meta-buttons">
-              <li>
-                <a href="{{ article.url }}" class="btn btn--tertiary btn--small" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">
-                  {{ 'blogs.article.read_more' | t }}
-                </a>
-              </li>
+			{% else %}
 
-              {% if blog.comments_enabled? and article.comments_count > 0 %}
-                <li>
-                  <a href="{{ article.url }}#comments" class="article__comment-count btn btn--tertiary btn--small">
-                    {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
-                  </a>
-                </li>
-              {% endif %}
-            </ul>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <div class="grid grid--uniform grid--blog">
-      {% for i in (1..section.settings.post_limit) %}
-        <div class="grid__item medium-up--one-third">
-          <div class="article__grid-meta">
-            <h3 class="article__title">
-              <a href="#">{{ 'homepage.onboarding.blog_title' | t }}</a>
-            </h3>
+			<!-- onboarding -->
+			<div class="onboarding">
+				<h2 class="home-section-title">{{ 'homepage.onboarding.section_title' | t }}</h2>
+				<p>{{ 'homepage.onboarding.no_content' | t }}</p>
+			</div>
 
-            {% if section.settings.blog_show_author %}
-              <span class="article__author">{{ 'homepage.onboarding.blog_author' | t }}</span>
-            {% endif %}
+			{% endif %}
 
-            <div class="rte article__grid-excerpt">
-              {{ 'homepage.onboarding.blog_excerpt' | t }}
-            </div>
-
-            <ul class="list--inline article__meta-buttons">
-              <li>
-                <a href="{{ article.url }}" class="btn btn--tertiary btn--small">
-                  {{ 'blogs.article.read_more' | t }}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% endunless %}
-
-  {% if section.settings.show_view_all %}
-    <hr class="hr--invisible" aria-hidden="true"></hr>
-    <div class="text-center">
-      <a href="{{ blog.url }}" class="btn" aria-label="{{ 'blogs.article.view_all_blogs' | t }}">
-        {{ 'blogs.article.view_all' | t }}
-      </a>
-    </div>
-  {% endif %}
+		</div>
+	</div>
 </div>
 
 
@@ -145,28 +52,27 @@
     "ja": "ブログ記事",
     "pt-BR": "Posts do blog"
   },
-  "class": "index-section",
   "settings": [
     {
       "type": "text",
       "id": "title",
       "label": {
-        "de": "Titel",
-        "en": "Heading",
-        "es": "Título",
+        "de": "Header",
+        "en": "Header",
+        "es": "Encabezado",
         "fr": "En-tête",
-        "it": "Heading",
-        "ja": "見出し",
-        "pt-BR": "Título"
+        "it": "Header",
+        "ja": "ヘッダー",
+        "pt-BR": "Cabeçalho"
       },
       "default": {
-        "de": "Blogposts",
-        "en": "Blog posts",
-        "es": "Entradas del blog",
-        "fr": "Articles de blog",
-        "it": "Articoli del blog",
-        "ja": "ブログ記事",
-        "pt-BR": "Posts do blog"
+        "de": "Blog",
+        "en": "Blog",
+        "es": "Blog",
+        "fr": "Blog",
+        "it": "Blog",
+        "ja": "ブログ",
+        "pt-BR": "Blog"
       }
     },
     {
@@ -194,52 +100,10 @@
         "ja": "投稿",
         "pt-BR": "Posts"
       },
-      "min": 3,
-      "max": 12,
-      "step": 3,
+      "min": 1,
+      "max": 3,
+      "step": 1,
       "default": 3
-    },
-    {
-      "type": "checkbox",
-      "id": "blog_show_author",
-      "label": {
-        "de": "Autor anzeigen",
-        "en": "Show author",
-        "es": "Mostrar autor",
-        "fr": "Afficher l'auteur",
-        "it": "Mostra autore",
-        "ja": "執筆者を表示する",
-        "pt-BR": "Mostrar autor"
-      },
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "blog_show_date",
-      "label": {
-        "de": "Datum anzeigen",
-        "en": "Show date",
-        "es": "Mostrar fecha",
-        "fr": "Afficher la date",
-        "it": "Mostra data",
-        "ja": "日付を表示する",
-        "pt-BR": "Exibir data"
-      },
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_view_all",
-      "label": {
-        "de": "'Alle anzeigen' Button anzeigen",
-        "en": "Show 'View all' button",
-        "es": "Mostrar el botón 'Ver todo'",
-        "fr": "Afficher le bouton “Voir tout”",
-        "it": "Mostra il pulsante \"Visualizza tutto\"",
-        "ja": "「すべて表示」ボタンを表示する",
-        "pt-BR": "Exibir botão 'Ver tudo'"
-      },
-      "default": false
     }
   ],
   "presets": [
@@ -263,8 +127,7 @@
         "pt-BR": "Blog"
       },
       "settings": {
-        "blog": "News",
-        "post_limit": 3
+        "blog": "News"
       }
     }
   ]

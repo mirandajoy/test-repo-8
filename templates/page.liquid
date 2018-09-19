@@ -1,13 +1,8 @@
-<div class="page-width">
-  <div class="grid">
-    <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
-      <div class="section-header text-center">
-        <h1>{{ page.title }}</h1>
-      </div>
+{% assign header_title = page.title %}
+{% include 'page_header' with header_title %}
 
-      <div class="rte">
-        {{ page.content }}
-      </div>
-    </div>
+<div class="wrapper wrapper--margins wrapper__article">
+  <div class="rte">
+    {{ page.content }}
   </div>
 </div>

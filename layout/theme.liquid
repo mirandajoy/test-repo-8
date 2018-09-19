@@ -1,77 +1,55 @@
 <!doctype html>
-<!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ shop.locale }}"> <!--<![endif]-->
+<html class="no-js">
 <head>
+  <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="{{ settings.color_button }}">
-  <link rel="canonical" href="{{ canonical_url }}">
 
-  {%- if settings.favicon != blank -%}
+  {% if settings.favicon != blank %}
     <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
-  {%- endif -%}
+  {% endif %}
 
-  {%- capture seo_title -%}
-    {%- if template == 'search' and search.performed == true -%}
-      {{ 'general.search.heading' | t: count: search.results_count }}: {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
-    {%- else -%}
-      {{ page_title }}
-    {%- endif -%}
-    {%- if current_tags -%}
-      {%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
-    {%- endif -%}
-    {%- if current_page != 1 -%}
-      &ndash; {{ 'general.meta.page' | t: page: current_page }}
-    {%- endif -%}
-    {%- assign escaped_page_title = page_title | escape -%}
-    {%- unless escaped_page_title contains shop.name -%}
-      &ndash; {{ shop.name }}
-    {%- endunless -%}
-  {%- endcapture -%}
-  <title>{{ seo_title | strip }}</title>
+  <title>
+    {% if template.name == 'password' %}{{ shop.name }}{% else %}{{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}{% endif %}
+  </title>
 
-  {%- if page_description -%}
+  {% if page_description %}
     <meta name="description" content="{{ page_description | escape }}">
-  {%- endif -%}
+  {% endif %}
 
   {% include 'social-meta-tags' %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
 
+  {{ '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' | stylesheet_tag }}
   {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
 
   <script>
     var theme = {
-      strings: {
-        addToCart: {{ 'products.product.add_to_cart' | t | json }},
-        soldOut: {{ 'products.product.sold_out' | t | json }},
+      strings:{
+        sold_out: {{ 'products.product.sold_out' | t | json }},
+        add_to_cart: {{ 'products.product.add_to_cart' | t | json }},
         unavailable: {{ 'products.product.unavailable' | t | json }},
-        regularPrice: {{ 'products.product.regular_price' | t | json }},
-        sale: {{ 'products.product.on_sale' | t | json }},
-        showMore: {{ 'general.filters.show_more' | t | json }},
-        showLess: {{ 'general.filters.show_less' | t | json }},
-        addressError: {{ 'sections.map.address_error' | t | json }},
-        addressNoResults: {{ 'sections.map.address_no_results' | t | json }},
-        addressQueryLimit: {{ 'sections.map.address_query_limit_html' | t | json }},
-        authError: {{ 'sections.map.auth_error_html' | t | json }},
-        newWindow: {{ 'general.accessibility.link_messages.new_window' | t | json }},
-        external: {{ 'general.accessibility.link_messages.external' | t | json }},
-        newWindowExternal: {{ 'general.accessibility.link_messages.new_window_and_external' | t | json }}
+        increase_quantity: {{ 'cart.general.increase_quantity' | t | json }},
+        reduce_quantity: {{ 'cart.general.reduce_quantity' | t | json }},
+        addressError: {{ 'map.address_error' | t | json }},
+        addressNoResults: {{ 'map.address_no_results' | t | json }},
+        addressQueryLimit: {{ 'map.address_query_limit_html' | t | json }},
+        authError: {{ 'map.auth_error_html' | t | json }}
       },
-      moneyFormat: {{ shop.money_format | json }}
-    }
-
-    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      settings: {
+        ajax_cart_enable: {% if settings.ajax_cart_enable %}{{ settings.ajax_cart_enable | json }}{% else %}null{% endif %},
+        moneyFormat: {{ shop.money_format | json }}
+      }
+    };
   </script>
 
-  <!--[if (lte IE 9) ]>{{ 'match-media.min.js' | asset_url | script_tag }}<![endif]-->
+  {{ 'jquery-2.2.3.min.js' | asset_url | script_tag }}
 
-  {%- if template.directory == 'customers' -%}
-    <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script><!--<![endif]-->
-    <!--[if lte IE 9]><script src="{{ 'shopify_common.js' | shopify_asset_url }}"></script><![endif]-->
-  {%- endif -%}
-
-  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'lazysizes.js' | asset_url }}" async="async"></script><!--<![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script><!--<![endif]-->
   <!--[if lte IE 9]><script src="{{ 'lazysizes.min.js' | asset_url }}"></script><![endif]-->
+
 
   <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
   <!--[if lte IE 9]><script src="{{ 'vendor.js' | asset_url }}"></script><![endif]-->
@@ -79,43 +57,61 @@
   <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'theme.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
   <!--[if lte IE 9]><script src="{{ 'theme.js' | asset_url }}"></script><![endif]-->
 
+  {{ '//cdnjs.cloudflare.com/ajax/libs/packery/1.4.3/packery.pkgd.min.js' | script_tag }}
+
   {{ content_for_header }}
+
+  {% if template.directory == 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {% endif %}
+
 </head>
 
-<body class="template-{{ template | split: '.' | first }}">
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
 
-  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+  <div id="PageContainer"{% if color %} class="{{ color }}"{% endif %}>
 
-  <div id="SearchDrawer" class="search-bar drawer drawer--top" role="dialog" aria-modal="true" aria-label="{{ 'general.search.placeholder' | t }}">
-    <div class="search-bar__table">
-      <div class="search-bar__table-cell search-bar__form-wrapper">
-        <form class="search search-bar__form" action="/search" method="get" role="search">
-          <input class="search__input search-bar__input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}">
-          <button class="search-bar__submit search__submit btn--link" type="submit">
-            {% include 'icon-search' %}
-            <span class="icon__fallback-text">{{ 'general.search.submit' | t }}</span>
-          </button>
-        </form>
-      </div>
-      <div class="search-bar__table-cell text-right">
-        <button type="button" class="btn--link search-bar__close js-drawer-close">
-          {% include 'icon-close' %}
-          <span class="icon__fallback-text">{{ 'general.search.close' | t }}</span>
-        </button>
-      </div>
-    </div>
-  </div>
+    {% section 'header' %}
 
-  {% section 'header' %}
+    <main class="main-content" role="main">
 
-  <div class="page-container" id="PageContainer">
-
-    <main class="main-content js-focus-hidden" id="MainContent" role="main" tabindex="-1">
       {{ content_for_layout }}
+
     </main>
 
     {% section 'footer' %}
 
   </div>
+
+  <script type="text/javascript">
+
+    {% capture jQuery_plus_icon %} {% include "asset_svg" with "plus" %} {% endcapture %}
+    {% capture jQuery_minus_icon %} {% include "asset_svg" with "minus" %} {% endcapture %}
+    {% capture jQuery_close_icon %} {% include "asset_svg" with "close" %} {% endcapture %}
+    {% capture jQuery_arrow_down_icon %} {% include "asset_svg" with "arrow_down" %} {% endcapture %}
+    {% capture jQuery_arrow_left_icon %} {% include "asset_svg" with "arrow_left" %} {% endcapture %}
+    {% capture jQuery_arrow_right_icon %} {% include "asset_svg" with "arrow_right" %} {% endcapture %}
+
+    jQuery.themeAssets = {
+      plus: '{{ jQuery_plus_icon | lstrip | rstrip }}',
+      minus: '{{ jQuery_minus_icon | lstrip | rstrip }}',
+      close: '{{ jQuery_close_icon | lstrip | rstrip }}',
+      arrow_down: '{{ jQuery_arrow_down_icon | lstrip | rstrip }}',
+      arrow_left: '{{ jQuery_arrow_left_icon | lstrip | rstrip }}',
+      arrow_right: '{{ jQuery_arrow_right_icon | lstrip | rstrip }}'
+    }
+
+    {% if newHash %}
+      $(function() {
+        timber.updateHash('{{ newHash }}');
+      });
+    {% endif %}
+    {% if resetPassword %}
+      $(function() {
+        timber.resetPasswordSuccess();
+      });
+    {% endif %}
+  </script>
+
 </body>
 </html>

@@ -74,8 +74,8 @@
     "general": {
       "title": "Carrello",
       "items_count": {
-        "one": "{{count}} articolo nel tuo carrello",
-        "other": "{{count}} articoli nel tuo carrello"
+        "one": "{{ count }} articolo nel tuo carrello",
+        "other": "{{ count }} articoli nel tuo carrello"
       },
       "note": "Istruzioni speciali per il venditore",
       "subtotal": "Totale parziale",

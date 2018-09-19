@@ -419,7 +419,7 @@ $z-index-announcement-bar: 10;
 $z-index-skip-to-content: 10000; // really high to be safe of app markup
 
 /*================ SVG ================*/
-$svg-select-icon: #{'//cdn.shopify.com/s/files/1/0047/4028/4489/t/1/assets/ico-select.svg?18258962560942399377'};
+$svg-select-icon: #{'//cdn.shopify.com/s/files/1/0047/4028/4489/t/1/assets/ico-select.svg?17213078946618258324'};
 
 /*================ Drawers ================*/
 $transition-drawer: all 0.45s cubic-bezier(0.29, 0.63, 0.44, 1);
@@ -491,7 +491,7 @@ $font-stack-body: Arimo, sans-serif;
 $font-style-body: normal;
 $font-weight-body: 400;
 
-$font-size-header: 20px;
+$font-size-header: 36px;
 $font-bold-titles: true;
 
 $font-size-base: 18px; // Henceforth known as 1em
@@ -542,7 +542,7 @@ $slick-opacity-not-active: 0.25;
 
 // Only called once so make sure proper file is grabbed
 @function slick-image-url($url) {
-  @return url(//cdn.shopify.com/s/files/1/0047/4028/4489/t/1/assets/ajax-loader.gif?18258962560942399377);
+  @return url(//cdn.shopify.com/s/files/1/0047/4028/4489/t/1/assets/ajax-loader.gif?17213078946618258324);
 }
 
 // Unused intentionally

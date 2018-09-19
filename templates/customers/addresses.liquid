@@ -18,17 +18,7 @@
 
         <div class="address">
 
-          <p>
-            {{ address.company }}<br>
-            {{ address.street }}<br>
-            {{ address.city | capitalize }}<br>
-            {% if address.province_code %}
-              {{ address.province_code | upcase }}<br>
-            {% endif %}
-            {{ address.zip | upcase }}<br>
-            {{ address.country }}<br>
-            {{ address.phone }}
-          </p>
+          {{ address | format_address }}
 
           <p>
             {{ 'customer.addresses.edit' | t | edit_customer_address_link: address.id }}

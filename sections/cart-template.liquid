@@ -82,7 +82,7 @@
           </div>
         {% endif %}
 
-        <div class="grid__item {% if section.settings.cart_notes_enable %}large--one-half{% endif %} text-right">
+        <div class="grid__item{% if section.settings.cart_notes_enable %} large--one-half{% endif %} text-right">
           <p class="cart__subtotal-holder">
             <span class="cart__subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
             <span class="h3 cart__subtotal">{{ cart.total_price | money }}</span>
@@ -92,7 +92,20 @@
                 {{ 'cart.general.savings_html' | t: savings: savings }}
               </small>
             {% endif %}
-            <span class="cart__subtotal-shipping">{{ 'cart.general.shipping_at_checkout' | t }}</span>
+
+            {%- capture taxes_shipping_checkout -%}
+              {%- if shop.taxes_included and shop.shipping_policy.body != blank -%}
+                {{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+              {%- elsif shop.taxes_included -%}
+                {{ 'cart.general.taxes_included_but_shipping_at_checkout' | t }}
+              {%- elsif shop.shipping_policy.body != blank -%}
+                {{ 'cart.general.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+              {%- else -%}
+                {{ 'cart.general.taxes_and_shipping_at_checkout' | t }}
+              {%- endif -%}
+            {%- endcapture -%}
+
+            <span class="cart__subtotal-shipping">{{ taxes_shipping_checkout }}</span>
           </p>
           <button type="submit" name="update" class="btn btn--regular btn--dark btn--outline btn__update">
             <span aria-hidden="true">{% include 'asset_svg' with 'reload' %}</span>

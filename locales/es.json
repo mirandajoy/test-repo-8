@@ -80,7 +80,6 @@
       "note": "Instrucciones especiales para el vendedor",
       "subtotal": "Subtotal",
       "savings_html": "Está ahorrando {{ savings }}",
-      "shipping_at_checkout": "Los códigos de descuento, los costes de envío y los impuestos se añaden durante el pago.",
       "remove_item": "Eliminar",
       "update_cart": "Recalcular",
       "checkout": "Finalizar pedido",
@@ -89,7 +88,11 @@
       "continue_browsing": "Continúe explorando",
       "quantity": "Cantidad",
       "reduce_quantity": "Quitar uno a la cantidad de artículos",
-      "increase_quantity": "Aumentar uno a la cantidad de artículos"
+      "increase_quantity": "Aumentar uno a la cantidad de artículos",
+      "taxes_and_shipping_at_checkout": "Los impuestos y gastos de envío se calculan en la pantalla de pagos",
+      "taxes_and_shipping_policy_at_checkout_html": "Los impuestos y <a href=\"{{ link }}\">gastos de envío<\/a> se calculan en la pantalla de pagos",
+      "taxes_included_but_shipping_at_checkout": "En la pantalla de pagos se incluye el impuesto y se calculan los gastos de envío",
+      "taxes_included_and_shipping_policy_html": "Impuesto incluido. Los <a href=\"{{ link }}\">gastos de envío<\/a> se calculan en la pantalla de pagos."
     }
   },
   "collections": {
@@ -253,7 +256,9 @@
       "add_to_cart": "Add to cart",
       "sale_price": "Precio de oferta",
       "regular_price": "Precio habitual",
-      "full_details": "Todos los detalles"
+      "full_details": "Todos los detalles",
+      "include_taxes": "Impuesto incluido.",
+      "shipping_policy_html": "Los <a href=\"{{ link }}\">gastos de envío<\/a> se calculan en la pantalla de pagos."
     }
   },
   "map": {

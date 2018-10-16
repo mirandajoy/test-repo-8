@@ -80,7 +80,6 @@
       "note": "Instructions spéciales pour la commande",
       "subtotal": "Sous-total",
       "savings_html": "Vous économisez {{ savings }}",
-      "shipping_at_checkout": "Les codes promo, les frais d'envoi et les taxes seront ajoutés à la caisse.",
       "remove_item": "Retirer item",
       "update_cart": "Recalculer",
       "checkout": "Procéder au paiement",
@@ -89,7 +88,11 @@
       "continue_browsing": "Retourner au magasinage",
       "quantity": "Quantité",
       "reduce_quantity": "Réduire la quantité de l'article de un",
-      "increase_quantity": "Augmenter la quantité de l'article de un"
+      "increase_quantity": "Augmenter la quantité de l'article de un",
+      "taxes_and_shipping_at_checkout": "Taxes et frais de port calculés à la caisse",
+      "taxes_and_shipping_policy_at_checkout_html": "Taxes et <a href=\"{{ link }}\">frais de port<\/a> calculés à la caisse",
+      "taxes_included_but_shipping_at_checkout": "Taxes incluses et frais de port calculés à la caisse",
+      "taxes_included_and_shipping_policy_html": "Taxes incluses. <a href=\"{{ link }}\">Frais de port<\/a> calculés à la caisse."
     }
   },
   "collections": {
@@ -253,7 +256,9 @@
       "add_to_cart": "Ajouter au panier",
       "sale_price": "Prix réduit",
       "regular_price": "Prix régulier",
-      "full_details": "Tous les détails"
+      "full_details": "Tous les détails",
+      "include_taxes": "Taxes incluses.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Frais de port<\/a> calculés à la caisse."
     }
   },
   "map": {

@@ -80,7 +80,6 @@
       "note": "Instruções especiais para o vendedor",
       "subtotal": "Subtotal",
       "savings_html": "Está a poupar {{ savings }}",
-      "shipping_at_checkout": "Envios e descontos calculados no checkout",
       "remove_item": "Eliminar",
       "update_cart": "Atualizar Carrinho de Compras",
       "checkout": "Check-out",
@@ -89,7 +88,11 @@
       "continue_browsing": "Continuar a Comprar",
       "quantity": "Quantidade",
       "reduce_quantity": "Reduza a quantidade do artigo em um",
-      "increase_quantity": "Aumente a quantidade do artigo em um"
+      "increase_quantity": "Aumente a quantidade do artigo em um",
+      "taxes_and_shipping_at_checkout": "Taxas e portes de envio calculados no pagamento",
+      "taxes_and_shipping_policy_at_checkout_html": "Taxas e <a href=\"{{ link }}\">portes de envio<\/a> calculados no pagamento",
+      "taxes_included_but_shipping_at_checkout": "Taxas incluídas e portes de envio calculados no pagamento",
+      "taxes_included_and_shipping_policy_html": "Taxas incluídas. <a href=\"{{ link }}\">Portes de envio<\/a> calculados no pagamento."
     }
   },
   "collections": {
@@ -253,7 +256,9 @@
       "add_to_cart": "Adicionar ao Carrinho de Compras",
       "sale_price": "Preço de saldo",
       "regular_price": "Preço normal",
-      "full_details": "Detalhes completos"
+      "full_details": "Detalhes completos",
+      "include_taxes": "Taxas incluídas.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Portes de envio<\/a> calculados no pagamento."
     }
   },
   "map": {

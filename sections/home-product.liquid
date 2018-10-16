@@ -96,8 +96,18 @@
                 </p>
               {% endif %}
 
-              <div class="form__row">
+              {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
+                <div class="product__policies{% if product.has_only_default_variant and product.available == false %} product__policies--no-variants-sold-out{% endif %} rte">
+                  {%- if shop.taxes_included -%}
+                    {{ 'products.product.include_taxes' | t }}
+                  {%- endif -%}
+                  {%- if shop.shipping_policy.body != blank -%}
+                    {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
 
+              <div class="form__row{% if product.has_only_default_variant and product.available == false %} form__row--no-variants-sold-out{% endif %}">
                 <select name="id" id="productSelect-{{ section.id }}" class="product-single__variants">
                   {% for variant in product.variants %}
                     {% if variant.available %}

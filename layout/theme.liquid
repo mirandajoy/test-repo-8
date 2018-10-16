@@ -73,7 +73,7 @@
 
     {% section 'header' %}
 
-    <main class="main-content" role="main">
+    <main class="main-content{% if template.name == blank %} main-content--no-template{% endif %}" role="main">
 
       {{ content_for_layout }}
 

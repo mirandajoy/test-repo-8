@@ -159,7 +159,9 @@
       "slideshow",
       "home-product",
       "featured-blog"
-    ]
+    ],
+    "pluginseo_pageTitleProductTemplate": "%% product.title %% %% product.selected_variant.title %% | stock photo t-shirts for designers",
+    "pluginseo_metaDescriptionProductTemplate": "%% product.description || strip_newlines || replace: '<ul>', ' ' || replace: '<\/li><li>', ', ' || replace: '.,', ',' || strip_html || escape %%"
   },
   "presets": {
     "Jumpstart": {
